@@ -2,7 +2,7 @@
 #include "switches.h"
 #include "led.h"
 
-char switch_state_down, switch_state_changed; /* effectively boolean */
+char switch_state_down[4], switch_state_changed; /* effectively boolean */
 
 static char 
 switch_update_interrupt_sense()
@@ -29,7 +29,16 @@ void
 switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
-  switch_state_down = (p2val & SW1) ? 0 : 1; /* 0 when SW1 is up */
+  switch_state_down[0] = (p2val & SW1) ? 0 : 1; /* 0 when SW1 is up */
+  switch_state_changed = 1;
+  
+  switch_state_down[1] = (p2val & SW2) ? 0 : 1; /* 0 when SW2 is up */
+  switch_state_changed = 1;
+  
+  switch_state_down[2] = (p2val & SW3) ? 0 : 1; /* 0 when SW3 is up */
+  switch_state_changed = 1;
+  
+  switch_state_down[3] = (p2val & SW4) ? 0 : 1; /* 0 when SW4 is up */
   switch_state_changed = 1;
   led_update();
 }
