@@ -4,7 +4,7 @@
 #include "switches.h"
 
 char toggle_red()		/* always toggle! */
-{
+{ 
   static char state = 0;
 
   switch (state) {
@@ -30,20 +30,90 @@ char toggle_green()	/* only toggle green if red is on!  */
   return changed;
 }
 
+// My Changes
 
-void state_advance()		/* alternate between toggling red & green */
+char toggle_red2()	  
+{
+  green_on = 0;
+  
+  static char state = 0;
+
+  switch (state) {
+  case 0:
+    red_on = 1;
+    state = 1;
+    break;
+  case 1:
+    red_on = 0;
+    green_on = 1;
+    state = 0;
+    break;
+  }
+  return 1;			/* always changes an led */
+}
+
+char toggle_green2()
+{
+  static char state = 0;
+
+  red_on = 0;
+  
+  switch (state) {
+    case 0:
+      green_on = 1;
+      state = 1;
+      break;
+    case 1:
+      green_on = 0;
+      red_on = 1;
+      state = 0;
+      break;
+    }
+  return 1;
+}
+
+
+void state_advance1()		/* alternate between toggling red & green */
 {
   char changed = 0;  
 
-  static enum {R=0, G=1} color = G;
-  switch (color) {
-  case R: changed = toggle_red(); color = G; break;
-  case G: changed = toggle_green(); color = R; break;
+  static char state = 0;
+  
+  switch(state) {
+   case 0: changed = toggle_red(); state = 1; break;
+   case 1: changed = toggle_green(); state = 0; break;
   }
 
   led_changed = changed;
   led_update();
 }
+
+void state_advance2()		/* alternate between toggling red & green */
+{
+  char changed = 0;  
+
+  static char state = 0;
+  
+  switch(state) {
+   case 0: changed = toggle_red2(); state = 1; break;
+   case 1: changed = toggle_green2(); state = 0; break;
+  }
+
+  led_changed = changed;
+  led_update();
+}
+
+void state_advance()
+{
+  if(switch_state_down[0]) {
+    state_advance1();
+  }
+  else if(switch_state_down[1]) {
+    state_advance2();
+  }
+}
+
+
 
 
 
