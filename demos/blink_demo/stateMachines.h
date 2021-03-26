@@ -3,4 +3,6 @@
 
 void state_advance();
 
+void state_advance_sl();
+
 #endif // included

@@ -113,6 +113,16 @@ void state_advance()
   }
 }
 
+void state_advance_sl()
+{
+  if(switch_state_down[2]) {
+    state_advance1();
+  }
+  else if(switch_state_down[3]) {
+    state_advance2();
+  }
+}
+
 
 
 
