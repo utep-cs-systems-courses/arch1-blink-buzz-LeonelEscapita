@@ -77,7 +77,6 @@ char toggle_green2()
 void state_advance1()		/* alternate between toggling red & green */
 {
   char changed = 0;  
-
   static char state = 0;
   
   switch(state) {
@@ -103,7 +102,7 @@ void state_advance2()		/* alternate between toggling red & green */
   led_changed = changed;
   led_update();
 }
-//THESE SHOULD ONLY INCREASE NUMBERS
+
 void state_advance()
 {
   if(switch_state_down[0]) {
@@ -126,11 +125,22 @@ void state_advance_sl()
 
 void state_advance_buzzer()
 {
+  static char buzz_state = 0;
+
   if(switch_state_down[0]) {
-    buzzer_set_period(1000);
+  switch(buzz_state) {
+  case 0: buzzer_set_period(3822); buzz_state++; break;
+  ocase 1: buzzer_set_period(3405); buzz_state++; break;
+  case 2: buzzer_set_period(3033); buzz_state = 0; break;
+  default: buzz_state = 0;
+  }
+  }
+  else {
+    buzzer_set_period(0);
   }
 
 }
+
 
 
 
