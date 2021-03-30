@@ -21,7 +21,7 @@ char toggle_red()		/* always toggle! */
   return 1;			/* always changes an led */
 }
 
-char toggle_green()	/* only toggle green if red is on!  */
+/*char toggle_green()  
 {
   char changed = 0;
   if (red_on) {
@@ -29,7 +29,7 @@ char toggle_green()	/* only toggle green if red is on!  */
     changed = 1;
   }
   return changed;
-}
+} */
 
 // My Changes
 

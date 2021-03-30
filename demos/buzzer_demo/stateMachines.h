@@ -9,6 +9,6 @@ void state_advance_sl();
 
 void state_advance_buzzer();
 
-void state_advance_sp();
+char toggle_green();
 
 #endif // included
